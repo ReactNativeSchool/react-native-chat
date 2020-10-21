@@ -2,10 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 
 import { ThreadRow, Separator } from '../components/ThreadRow';
-import { listenToThreads } from '../firebase';
+import { listenToThreads, listenToThreadTracking } from '../firebase';
+
+const isThreadUnread = (thread, threadTracking) => {
+  if (
+    threadTracking[thread._id] &&
+    threadTracking[thread._id] < thread.latestMessage.createdAt
+  ) {
+    return true;
+  }
+
+  return false;
+};
 
 export default ({ navigation }) => {
   const [threads, setThreads] = useState([]);
+  const [threadTracking, setThreadTracking] = useState({});
 
   useEffect(() => {
     const unsubscribe = listenToThreads().onSnapshot((querySnapshot) => {
@@ -27,6 +39,16 @@ export default ({ navigation }) => {
     };
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = listenToThreadTracking().onSnapshot((snapshot) => {
+      setThreadTracking(snapshot.data() || {});
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <View style={{ flex: 1, backgroundColor: '#fff', paddingBottom: 50 }}>
       <FlatList
@@ -36,6 +58,7 @@ export default ({ navigation }) => {
           <ThreadRow
             {...item}
             onPress={() => navigation.navigate('Messages', { thread: item })}
+            unread={isThreadUnread(item, threadTracking)}
           />
         )}
         ItemSeparatorComponent={() => <Separator />}
