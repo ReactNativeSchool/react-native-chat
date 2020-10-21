@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.handlebarlabs.chatdemo2",
+    package = "com.handlebarlabs.chatdemo3",
 )
 
 android_resource(
     name = "res",
-    package = "com.handlebarlabs.chatdemo2",
+    package = "com.handlebarlabs.chatdemo3",
     res = "src/main/res",
 )
 

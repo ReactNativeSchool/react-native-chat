@@ -1,4 +1,4 @@
-package com.handlebarlabs.chatdemo2;
+package com.handlebarlabs.chatdemo3;
 
 import com.facebook.react.ReactActivity;
 

@@ -130,7 +130,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.handlebarlabs.chatdemo2"
+        applicationId "com.handlebarlabs.chatdemo3"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
